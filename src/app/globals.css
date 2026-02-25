@@ -1,0 +1,134 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --manthan-black: #0a0a0a;
+    --manthan-dark: #1a0a0a;
+    --manthan-maroon: #8B0000;
+    --manthan-maroon-light: #a52a2a;
+    --manthan-crimson: #DC143C;
+    --manthan-gold: #d4a837;
+    --manthan-gold-light: #f0d060;
+    --manthan-gold-dark: #b8860b;
+    --manthan-red: #cc0000;
+    --manthan-red-glow: #ff2222;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--manthan-black);
+    color: #e0e0e0;
+    overflow-x: hidden;
+}
+
+/* Glowing border effect */
+.glow-border {
+    border: 1px solid rgba(212, 168, 55, 0.3);
+    box-shadow: 0 0 15px rgba(212, 168, 55, 0.1), inset 0 0 15px rgba(212, 168, 55, 0.05);
+}
+
+.glow-border:hover {
+    border-color: rgba(212, 168, 55, 0.6);
+    box-shadow: 0 0 25px rgba(212, 168, 55, 0.2), inset 0 0 25px rgba(212, 168, 55, 0.1);
+}
+
+/* Gold gradient text */
+.text-gold-gradient {
+    background: linear-gradient(135deg, #d4a837, #f0d060, #b8860b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Red glow effect */
+.red-glow {
+    text-shadow: 0 0 10px rgba(220, 20, 60, 0.5), 0 0 20px rgba(220, 20, 60, 0.3);
+}
+
+/* Card glass effect */
+.glass-card {
+    background: rgba(26, 10, 10, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(212, 168, 55, 0.15);
+    border-radius: 12px;
+}
+
+.glass-card:hover {
+    border-color: rgba(212, 168, 55, 0.4);
+    background: rgba(26, 10, 10, 0.9);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #5c0000;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #8B0000;
+}
+
+/* Animations */
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+/* Razorpay button override */
+.razorpay-payment-button {
+    display: none !important;
+}
+
+/* Loading spinner */
+.spinner {
+    border: 3px solid rgba(212, 168, 55, 0.2);
+    border-top: 3px solid #d4a837;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@layer utilities {
+    .text-balance {
+        text-wrap: balance;
+    }
+}
