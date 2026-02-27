@@ -1,26 +1,82 @@
-# Manthan - College Tech Fest Application
+# Manthan 2026 - College Tech Fest Website
 
-## Environment Variables (create .env.local)
+A premium, high-performance web platform designed for the **Manthan 2026** College Tech Fest. This application handles everything from event discovery to secure registration and digital ticket generation.
 
+![Manthan Logo](public/manthan_final_logo.png)
+
+## 🚀 Features
+
+-   **Dynamic Event Catalog**: Browse technical, cultural, and sports events with detailed descriptions and rules.
+-   **Multi-Step Registration**: A seamless, user-friendly registration flow (Basic Info → Event Selection → Payment).
+-   **Razorpay Integration**: Secure payment processing with server-side validation and signature verification.
+-   **Digital Entry Pass**: Automatic generation of unique Entry Passes with QR codes for event check-ins.
+-   **Responsive Design**: Fully optimized for mobile, tablet, and desktop with premium aesthetics and Framer Motion animations.
+-   **Real-time Validation**: Robust client-side and server-side data validation using Zod.
+
+## 🛠️ Tech Stack
+
+-   **Frontend**: Next.js 14 (App Router), TypeScript, Tailwind CSS
+-   **Animations**: Framer Motion, Lucide React (Icons)
+-   **Backend**: Next.js API Routes (Serverless)
+-   **Database**: Supabase (PostgreSQL)
+-   **Payments**: Razorpay SDK
+-   **QR Generation**: `qrcode` library
+
+## 📥 Installation & Setup
+
+Follow these steps to get the project running locally on your machine.
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/Uday-Bhoi/manthan.git
+cd manthan
 ```
+
+### 2. Install Dependencies
+```bash
+npm install
+```
+
+### 3. Environment Variables
+Create a `.env.local` file in the root directory and add the following keys:
+
+```env
+# Supabase Configuration
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 
-RAZORPAY_KEY_ID=your_razorpay_key_id
-RAZORPAY_KEY_SECRET=your_razorpay_key_secret
+# Razorpay Configuration
 NEXT_PUBLIC_RAZORPAY_KEY_ID=your_razorpay_key_id
-
-NEXT_PUBLIC_BASE_URL=http://localhost:3000
+RAZORPAY_KEY_SECRET=your_razorpay_key_secret
 ```
 
-## Setup
+### 4. Database Schema
+Ensure your Supabase database has the following tables:
+- `registrations`: To store user entries and payment status.
+- `events`: (Optional) If you choose to sync events from the database.
+- `rate_limits`: For API security.
 
-1. `npm install` (set npm cache to E: if C: is low: `npm config set cache E:\npm-cache`)
-2. Create Supabase project and run the SQL from `src/lib/supabase/schema.sql`
-3. Add environment variables to `.env.local`
-4. `npm run dev`
+*Refer to `src/lib/supabase/schema.sql` (if present) for the full structure.*
 
-## Deployment
+### 5. Run the Project
+```bash
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-Deploy on Vercel with environment variables configured.
+## 📁 Project Structure
+
+- `src/app`: Next.js pages and API routes.
+- `src/components`: Reusable UI components.
+- `src/lib`: Utility functions, constants, and validation schemas.
+- `public`: Static assets (images, videos).
+
+## ⚠️ Important Notes
+
+- **Large Files**: The background video `public/ancient .mp4` is omitted from the repository due to GitHub's file size limits (160MB). Please ensure you have it in your local `public/` folder for the full visual experience.
+- **Payment Mode**: By default, the payment integration is set up for Razorpay Test Mode. Switch keys to Live Mode for production.
+
+---
+
+Built with ❤️ for Manthan 2026.

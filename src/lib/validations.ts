@@ -1,5 +1,29 @@
 import { z } from 'zod';
 
+const teamMemberSchema = z.object({
+    name: z
+        .string()
+        .min(2, 'Member name must be at least 2 characters')
+        .max(100, 'Member name must be less than 100 characters')
+        .regex(/^[a-zA-Z\s.'-]+$/, 'Member name contains invalid characters'),
+});
+
+const teamRegistrationSchema = z.object({
+    event_id: z.string().uuid('Invalid team event ID'),
+    team_name: z
+        .string()
+        .trim()
+        .max(100, 'Team name must be less than 100 characters')
+        .optional()
+        .or(z.literal('')),
+    team_size: z
+        .number({ invalid_type_error: 'Team size must be a number' })
+        .int('Team size must be a whole number')
+        .min(1, 'Team size must be at least 1')
+        .max(50, 'Team size must be less than or equal to 50'),
+    members: z.array(teamMemberSchema).max(49, 'Too many team members provided'),
+});
+
 export const registrationSchema = z.object({
     name: z
         .string()
@@ -28,6 +52,11 @@ export const registrationSchema = z.object({
         .array(z.string().uuid('Invalid event ID'))
         .min(1, 'Select at least one event')
         .max(12, 'Cannot select more than 12 events'),
+    team_registrations: z
+        .array(teamRegistrationSchema)
+        .max(12, 'Cannot submit team details for more than 12 events')
+        .optional()
+        .default([]),
 });
 
 export const paymentVerificationSchema = z.object({

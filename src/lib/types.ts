@@ -3,17 +3,38 @@ export interface Event {
     name: string;
     slug: string;
     description: string;
+    long_description: string | null;
     category: 'technical' | 'cultural' | 'sports';
     fee: number; // in paise
+    fee_calculation: 'per_team' | 'per_participant';
     max_participants: number;
     current_participants: number;
     event_date: string;
+    registration_deadline: string | null;
     venue: string;
     rules: string[];
+    prize_text: string | null;
+    prize_winner: number | null;
+    prize_runner_up: number | null;
+    prize_second_runner_up: number | null;
     image_url: string | null;
     is_active: boolean;
     team_size: number;
+    team_size_fixed: number | null;
+    team_size_min: number | null;
+    team_size_max: number | null;
     created_at: string;
+}
+
+export interface TeamMember {
+    name: string;
+}
+
+export interface TeamRegistration {
+    event_id: string;
+    team_name: string | null;
+    team_size: number;
+    members: TeamMember[];
 }
 
 export interface Registration {
@@ -26,6 +47,7 @@ export interface Registration {
     year: string | null;
     department: string | null;
     event_ids: string[];
+    team_registrations: TeamRegistration[];
     total_amount: number; // in paise
     payment_status: 'PENDING' | 'PAID' | 'FAILED' | 'REFUNDED';
     razorpay_order_id: string | null;
@@ -47,6 +69,7 @@ export interface RegistrationFormData {
     year: string;
     department: string;
     event_ids: string[];
+    team_registrations: TeamRegistration[];
 }
 
 export interface RazorpayOrder {

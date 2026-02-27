@@ -5,10 +5,19 @@ import { supabaseAdmin } from '@/lib/supabase/server';
 import { paymentVerificationSchema } from '@/lib/validations';
 import { checkRateLimit } from '@/lib/rate-limit';
 
+function getClientIp(request: NextRequest): string {
+    const forwardedFor = request.headers.get('x-forwarded-for');
+    if (forwardedFor) {
+        return forwardedFor.split(',')[0].trim();
+    }
+
+    return request.headers.get('x-real-ip') || 'unknown';
+}
+
 export async function POST(request: NextRequest) {
     try {
         // Rate limiting
-        const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
+        const ip = getClientIp(request);
         const { allowed } = await checkRateLimit(ip, 'verify-payment');
         if (!allowed) {
             return NextResponse.json(
@@ -31,9 +40,13 @@ export async function POST(request: NextRequest) {
         const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = validation.data;
 
         // CRITICAL: Verify Razorpay signature using HMAC SHA256
+        if (!process.env.RAZORPAY_KEY_SECRET) {
+            throw new Error('Razorpay secret is not configured');
+        }
+
         const body_text = razorpay_order_id + '|' + razorpay_payment_id;
         const expected_signature = crypto
-            .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET!)
+            .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET)
             .update(body_text)
             .digest('hex');
 
@@ -70,24 +83,22 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // Generate QR code containing only the ticket_id
-        const qrCodeDataUrl = await QRCode.toDataURL(registration.ticket_id, {
-            width: 300,
-            margin: 2,
+        const qrCodePromise = QRCode.toDataURL(registration.ticket_id, {
+            width: 220,
+            margin: 1,
             color: {
                 dark: '#d4a837',
                 light: '#0a0a0a',
             },
         });
 
-        // Update registration: mark as PAID, store payment details, QR code
+        // Update registration: mark as PAID and store payment details first
         const { error: updateError } = await supabaseAdmin
             .from('registrations')
             .update({
                 payment_status: 'PAID',
                 razorpay_payment_id,
                 razorpay_signature,
-                qr_code: qrCodeDataUrl,
             })
             .eq('id', registration.id);
 
@@ -99,9 +110,14 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // Increment participant count for each event
-        for (const eventId of registration.event_ids) {
-            await supabaseAdmin.rpc('increment_participant_count', { event_id: eventId });
+        try {
+            const qrCodeDataUrl = await qrCodePromise;
+            await supabaseAdmin
+                .from('registrations')
+                .update({ qr_code: qrCodeDataUrl })
+                .eq('id', registration.id);
+        } catch (qrError) {
+            console.error('QR generation/update failed:', qrError);
         }
 
         return NextResponse.json({

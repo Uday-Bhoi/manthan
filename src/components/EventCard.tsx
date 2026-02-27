@@ -15,11 +15,24 @@ interface EventCardProps {
 export default function EventCard({ event, selected, onToggle, selectable }: EventCardProps) {
     const colors = categoryColors[event.category] || categoryColors.technical;
 
+    const teamLabel = (() => {
+        if (event.team_size_fixed && event.team_size_fixed > 1) {
+            return `Team of ${event.team_size_fixed}`;
+        }
+        if (event.team_size_min && event.team_size_max && event.team_size_max > 1) {
+            return `Team ${event.team_size_min}-${event.team_size_max}`;
+        }
+        if (event.team_size > 1) {
+            return `Team of ${event.team_size}`;
+        }
+        return 'Individual';
+    })();
+
     const cardContent = (
         <div
             className={`glass-card p-6 transition-all duration-300 cursor-pointer group ${selected
-                    ? 'border-manthan-gold ring-2 ring-manthan-gold/30'
-                    : 'hover:border-manthan-gold/40'
+                ? 'border-manthan-gold ring-2 ring-manthan-gold/30'
+                : 'hover:border-manthan-gold/40'
                 }`}
             onClick={() => selectable && onToggle?.(event.id)}
         >
@@ -31,8 +44,8 @@ export default function EventCard({ event, selected, onToggle, selectable }: Eve
                 {selectable && (
                     <div
                         className={`w-6 h-6 rounded border-2 flex items-center justify-center transition-all ${selected
-                                ? 'bg-manthan-gold border-manthan-gold'
-                                : 'border-gray-600 group-hover:border-manthan-gold/50'
+                            ? 'bg-manthan-gold border-manthan-gold'
+                            : 'border-gray-600 group-hover:border-manthan-gold/50'
                             }`}
                     >
                         {selected && (
@@ -68,9 +81,13 @@ export default function EventCard({ event, selected, onToggle, selectable }: Eve
                 </div>
                 <div className="flex items-center text-gray-500 text-xs">
                     <Users size={14} className="mr-2 text-manthan-gold/50" />
-                    {event.team_size === 1 ? 'Individual' : `Team of ${event.team_size}`}
+                    {teamLabel}
                 </div>
             </div>
+
+            {event.prize_text && (
+                <p className="text-xs text-manthan-gold/80 mb-4 line-clamp-1">Prize: {event.prize_text}</p>
+            )}
 
             {/* Fee */}
             <div className="flex items-center justify-between pt-4 border-t border-manthan-gold/10">

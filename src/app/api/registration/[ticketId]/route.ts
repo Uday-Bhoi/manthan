@@ -1,15 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabase/server';
+import { getEventsByIds } from '@/lib/events-catalog';
 
 export async function GET(
     request: NextRequest,
     { params }: { params: { ticketId: string } }
 ) {
     try {
+        const { ticketId } = params;
         const { data: registration, error } = await supabaseAdmin
             .from('registrations')
             .select('*')
-            .eq('ticket_id', params.ticketId)
+            .eq('ticket_id', ticketId)
             .eq('payment_status', 'PAID')
             .single();
 
@@ -20,11 +22,14 @@ export async function GET(
             );
         }
 
-        // Fetch event details
-        const { data: events } = await supabaseAdmin
-            .from('events')
-            .select('id, name, category, event_date, venue')
-            .in('id', registration.event_ids);
+        // Resolve event details from static catalog
+        const events = getEventsByIds(registration.event_ids).map((event) => ({
+            id: event.id,
+            name: event.name,
+            category: event.category,
+            event_date: event.event_date,
+            venue: event.venue,
+        }));
 
         return NextResponse.json({
             registration,

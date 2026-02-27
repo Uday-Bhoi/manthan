@@ -28,9 +28,56 @@ export const categoryIcons: Record<string, string> = {
     sports: '⚽',
 };
 
+export const sportsCommitteeStructure = {
+    outdoor: ['Badminton', 'Box Cricket', 'Volleyball', 'Tug of war'],
+    indoor: ['Chess', 'Carrom', 'Ludo', 'BGMI', 'Deadlift', 'Bench Press'],
+} as const;
+
+const sportsTrackByName: Record<string, 'indoor' | 'outdoor'> = {
+    badminton: 'outdoor',
+    'box cricket': 'outdoor',
+    volleyball: 'outdoor',
+    'tug of war': 'outdoor',
+    'tug-of-war': 'outdoor',
+    chess: 'indoor',
+    carrom: 'indoor',
+    ludo: 'indoor',
+    bgmi: 'indoor',
+    deadlift: 'indoor',
+    'bench press': 'indoor',
+    'bench-press': 'indoor',
+    'e-sports': 'indoor',
+    'e sports': 'indoor',
+    esports: 'indoor',
+};
+
+export function getSportsTrackByName(eventName: string): 'indoor' | 'outdoor' | null {
+    const normalized = eventName.trim().toLowerCase();
+    return sportsTrackByName[normalized] || null;
+}
+
 // Format fee from paise to INR display
 export function formatFee(paise: number): string {
     return `₹${(paise / 100).toLocaleString('en-IN')}`;
+}
+
+// Generate ticket ID
+export function generateTicketId(category?: string): string {
+    const prefix = 'MNT';
+    const catCode = category ? category.substring(0, 4).toUpperCase() : 'GEN';
+    const timestamp = Date.now().toString(36).toUpperCase();
+    const random = Math.random().toString(36).substring(2, 5).toUpperCase();
+    return `${prefix}-${catCode}-${timestamp}${random}`;
+}
+
+// Sanitize string input
+export function sanitizeInput(input: string): string {
+    return input
+        .trim()
+        .replace(/[<>]/g, '')
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#x27;');
 }
 
 // Format date
@@ -59,25 +106,6 @@ export function calculateTotalFee(events: Event[], selectedIds: string[]): numbe
     return events
         .filter((e) => selectedIds.includes(e.id))
         .reduce((sum, e) => sum + e.fee, 0);
-}
-
-// Generate ticket ID
-export function generateTicketId(category?: string): string {
-    const prefix = 'MNT';
-    const catCode = category ? category.substring(0, 4).toUpperCase() : 'GEN';
-    const timestamp = Date.now().toString(36).toUpperCase();
-    const random = Math.random().toString(36).substring(2, 5).toUpperCase();
-    return `${prefix}-${catCode}-${timestamp}${random}`;
-}
-
-// Sanitize string input
-export function sanitizeInput(input: string): string {
-    return input
-        .trim()
-        .replace(/[<>]/g, '')
-        .replace(/&/g, '&amp;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#x27;');
 }
 
 // Event schedule data

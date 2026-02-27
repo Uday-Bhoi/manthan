@@ -2,6 +2,8 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import EventsFilter from './EventsFilter';
 
+import { getActiveEvents } from '@/lib/events-catalog';
+
 export const metadata = {
     title: 'Events | Manthan 2026',
     description: 'Explore all events at Manthan 2026 tech fest',
@@ -19,6 +21,11 @@ export default async function EventsPage() {
         events = data.events || [];
     } catch {
         events = [];
+    }
+
+    // Fallback to local catalog if API returns empty
+    if (events.length === 0) {
+        events = getActiveEvents();
     }
 
     return (

@@ -6,7 +6,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { Registration, Event } from '@/lib/types';
-import { formatFee, formatDate, formatTime } from '@/lib/constants';
+import { formatFee, formatDate } from '@/lib/constants';
 import { CheckCircle, Download, Calendar, MapPin, Ticket, User, Mail, Phone, Building } from 'lucide-react';
 
 export default function ConfirmationPage() {
@@ -18,6 +18,10 @@ export default function ConfirmationPage() {
     const [events, setEvents] = useState<Partial<Event>[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+
+    const teamRegistrationMap = new Map(
+        (registration?.team_registrations || []).map((team) => [team.event_id, team])
+    );
 
     useEffect(() => {
         async function fetchData() {
@@ -114,7 +118,7 @@ export default function ConfirmationPage() {
             <>
                 <Navbar />
                 <main className="pt-24 pb-16 min-h-screen flex items-center justify-center">
-                    <LoadingSpinner size="lg" />
+                    <LoadingSpinner />
                 </main>
             </>
         );
@@ -216,6 +220,14 @@ export default function ConfirmationPage() {
                                     >
                                         <div>
                                             <p className="text-gray-200 text-sm font-medium">{event.name}</p>
+                                            {event.id && teamRegistrationMap.get(event.id) && (
+                                                <p className="text-gray-500 text-xs mt-1">
+                                                    Team size: {teamRegistrationMap.get(event.id)?.team_size}
+                                                    {teamRegistrationMap.get(event.id)?.team_name
+                                                        ? ` · ${teamRegistrationMap.get(event.id)?.team_name}`
+                                                        : ''}
+                                                </p>
+                                            )}
                                             <div className="flex items-center gap-3 mt-1">
                                                 {event.event_date && (
                                                     <span className="text-gray-500 text-xs flex items-center">
