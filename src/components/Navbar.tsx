@@ -18,10 +18,10 @@ export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <nav className="fixed top-0 left-0 right-0 z-50 bg-black/40 backdrop-blur-md transition-all duration-300">
+        <nav className="fixed top-0 left-0 right-0 z-50 bg-black/40 backdrop-blur-md transition-all duration-300 border-b border-white/5">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Desktop Navbar */}
-                <div className="hidden md:flex items-center justify-between h-20">
+                <div className="hidden md:flex items-center justify-between h-24">
                     {/* Left Links */}
                     <div className="flex-1 flex items-center justify-start space-x-8">
                         {leftLinks.map((link) => (
@@ -35,15 +35,14 @@ export default function Navbar() {
                         ))}
                     </div>
 
-                    {/* Center Logo */}
+                    {/* Center Logo - College Logo */}
                     <div className="flex-shrink-0 flex items-center justify-center px-4">
                         <Link href="/" className="flex flex-col items-center">
-                            <span className="font-heading text-3xl font-black text-gold-gradient tracking-tighter leading-none">
-                                MANTHAN
-                            </span>
-                            <span className="text-[10px] text-manthan-gold font-bold tracking-[0.4em] mt-1 opacity-80 uppercase">
-                                2026
-                            </span>
+                            <img
+                                src="/bbbg-removebg-preview.png"
+                                alt="College Logo"
+                                className="h-16 w-auto object-contain hover:scale-105 transition-transform duration-300"
+                            />
                         </Link>
                     </div>
 
@@ -69,15 +68,21 @@ export default function Navbar() {
                     </div>
                 </div>
 
-                {/* Mobile Navbar */}
-                <div className="md:hidden flex items-center justify-between h-16">
-                    <Link href="/" className="flex flex-col items-start leading-none gap-0.5">
-                        <span className="font-heading text-xl font-black text-gold-gradient tracking-tight">
-                            MANTHAN
-                        </span>
-                        <span className="text-[8px] text-manthan-gold font-bold tracking-widest">
-                            2026
-                        </span>
+                <div className="md:hidden flex items-center justify-between h-20">
+                    <Link href="/" className="flex items-center gap-3">
+                        <img
+                            src="/bbbg-removebg-preview.png"
+                            alt="College Logo"
+                            className="h-12 w-auto object-contain"
+                        />
+                        <div className="flex flex-col leading-none">
+                            <span className="font-heading text-lg font-black text-gold-gradient tracking-tight">
+                                MANTHAN
+                            </span>
+                            <span className="text-[8px] text-manthan-gold font-bold tracking-widest">
+                                2026
+                            </span>
+                        </div>
                     </Link>
 
                     <button
@@ -92,7 +97,7 @@ export default function Navbar() {
 
             {/* Mobile Menu Overlay */}
             <div
-                className={`md:hidden absolute top-16 left-0 w-full bg-manthan-black/95 backdrop-blur-2xl border-b border-manthan-gold/20 transition-all duration-500 ease-in-out overflow-hidden ${isOpen ? 'max-h-[80vh] opacity-100' : 'max-h-0 opacity-0'
+                className={`md:hidden absolute top-20 left-0 w-full bg-manthan-black/95 backdrop-blur-2xl border-b border-manthan-gold/20 transition-all duration-500 ease-in-out overflow-hidden ${isOpen ? 'max-h-[80vh] opacity-100' : 'max-h-0 opacity-0'
                     }`}
             >
                 <div className="px-6 py-8 flex flex-col space-y-6 text-center">

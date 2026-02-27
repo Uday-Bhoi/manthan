@@ -18,8 +18,11 @@ export default function ContactPage() {
     return (
         <>
             <Navbar />
-            <main className="pt-24 pb-16 px-4 min-h-screen">
-                <div className="max-w-6xl mx-auto">
+            <main className="pt-24 pb-16 px-4 min-h-screen relative overflow-hidden">
+                {/* Background Glow */}
+                <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-manthan-maroon/10 rounded-full blur-[120px] pointer-events-none" />
+
+                <div className="max-w-6xl mx-auto relative z-10">
                     {/* Header */}
                     <div className="text-center mb-12">
                         <h1 className="font-heading text-4xl sm:text-5xl font-bold text-gold-gradient mb-4">
@@ -44,7 +47,7 @@ export default function ContactPage() {
                                         </div>
                                         <div>
                                             <h3 className="text-manthan-gold font-medium">Email</h3>
-                                            <p className="text-gray-400 text-sm">manthan@college.edu</p>
+                                            <p className="text-gray-400 text-sm">manthan@bvimit.co.in</p>
                                             <p className="text-gray-400 text-sm">support@manthan2026.in</p>
                                         </div>
                                     </div>
@@ -54,8 +57,8 @@ export default function ContactPage() {
                                         </div>
                                         <div>
                                             <h3 className="text-manthan-gold font-medium">Phone</h3>
-                                            <p className="text-gray-400 text-sm">+91 98765 43210 (General)</p>
-                                            <p className="text-gray-400 text-sm">+91 98765 43211 (Technical)</p>
+                                            <p className="text-gray-400 text-sm">+91 123 456 7890 (General)</p>
+                                            <p className="text-gray-400 text-sm">+91 123 456 7891 (Technical)</p>
                                         </div>
                                     </div>
                                     <div className="flex items-start space-x-4">
@@ -65,8 +68,8 @@ export default function ContactPage() {
                                         <div>
                                             <h3 className="text-manthan-gold font-medium">Address</h3>
                                             <p className="text-gray-400 text-sm">
-                                                College Campus,<br />
-                                                City, State - 400001
+                                                BVIMIT, Sector-8, Belapur,<br />
+                                                CBD, Navi Mumbai - 400614
                                             </p>
                                         </div>
                                     </div>
@@ -80,9 +83,9 @@ export default function ContactPage() {
                                 </h2>
                                 <div className="space-y-3">
                                     {[
-                                        { name: 'Rahul Sharma', role: 'General Secretary', phone: '+91 98765 43210' },
-                                        { name: 'Priya Patel', role: 'Technical Head', phone: '+91 98765 43211' },
-                                        { name: 'Amit Kumar', role: 'Cultural Head', phone: '+91 98765 43212' },
+                                        { name: 'Uday Bhoi', role: 'General Secretary', phone: '+91 123 456 7890' },
+                                        { name: 'Ameya Bagwe', role: 'Technical Head', phone: '+91 123 456 7891' },
+                                        { name: 'Sameer Sawant', role: 'Cultural Head', phone: '+91 123 456 7892' },
                                     ].map((coord) => (
                                         <div key={coord.name} className="flex items-center justify-between p-3 rounded-lg bg-manthan-black/50">
                                             <div>

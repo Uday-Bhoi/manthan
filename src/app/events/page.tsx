@@ -31,8 +31,11 @@ export default async function EventsPage() {
     return (
         <>
             <Navbar />
-            <main className="pt-24 pb-16 px-4 min-h-screen">
-                <div className="max-w-7xl mx-auto">
+            <main className="pt-24 pb-16 px-4 min-h-screen relative overflow-hidden">
+                {/* Background Glow */}
+                <div className="absolute top-0 right-1/4 w-96 h-96 bg-manthan-maroon/10 rounded-full blur-[120px] pointer-events-none" />
+
+                <div className="max-w-7xl mx-auto relative z-10">
                     {/* Header */}
                     <div className="text-center mb-12">
                         <h1 className="font-heading text-4xl sm:text-5xl font-bold text-gold-gradient mb-4">

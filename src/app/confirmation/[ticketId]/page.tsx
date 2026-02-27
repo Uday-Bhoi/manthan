@@ -141,8 +141,11 @@ export default function ConfirmationPage() {
     return (
         <>
             <Navbar />
-            <main className="pt-24 pb-16 px-4 min-h-screen">
-                <div className="max-w-2xl mx-auto">
+            <main className="pt-24 pb-16 px-4 min-h-screen relative overflow-hidden">
+                {/* Background Glow */}
+                <div className="absolute top-0 right-1/4 w-96 h-96 bg-manthan-gold/5 rounded-full blur-[120px] pointer-events-none" />
+
+                <div className="max-w-2xl mx-auto relative z-10">
                     {/* Success Banner */}
                     <div className="text-center mb-8">
                         <CheckCircle size={64} className="mx-auto text-green-500 mb-4" />

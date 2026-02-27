@@ -6,16 +6,18 @@ A premium, high-performance web platform designed for the **Manthan 2026** Colle
 
 ## 🚀 Features
 
+-   **Cinematic UI/UX**: High-end visuals using Cormorant Unicase typography and global video backgrounds.
 -   **Dynamic Event Catalog**: Browse technical, cultural, and sports events with detailed descriptions and rules.
 -   **Multi-Step Registration**: A seamless, user-friendly registration flow (Basic Info → Event Selection → Payment).
 -   **Razorpay Integration**: Secure payment processing with server-side validation and signature verification.
 -   **Digital Entry Pass**: Automatic generation of unique Entry Passes with QR codes for event check-ins.
 -   **Responsive Design**: Fully optimized for mobile, tablet, and desktop with premium aesthetics and Framer Motion animations.
--   **Real-time Validation**: Robust client-side and server-side data validation using Zod.
+-   **Admin Dashboard**: Manage registrations, check-in participants, and view real-time statistics.
 
 ## 🛠️ Tech Stack
 
--   **Frontend**: Next.js 14 (App Router), TypeScript, Tailwind CSS
+-   **Core**: Next.js 14 (App Router), TypeScript, Tailwind CSS
+-   **Typography**: Cormorant Unicase (Google Fonts)
 -   **Animations**: Framer Motion, Lucide React (Icons)
 -   **Backend**: Next.js API Routes (Serverless)
 -   **Database**: Supabase (PostgreSQL)
@@ -38,7 +40,7 @@ npm install
 ```
 
 ### 3. Environment Variables
-Create a `.env.local` file in the root directory and add the following keys:
+Create a `.env.local` file in the root directory and add the following keys from your Supabase and Razorpay accounts:
 
 ```env
 # Supabase Configuration
@@ -52,12 +54,8 @@ RAZORPAY_KEY_SECRET=your_razorpay_key_secret
 ```
 
 ### 4. Database Schema
-Ensure your Supabase database has the following tables:
-- `registrations`: To store user entries and payment status.
-- `events`: (Optional) If you choose to sync events from the database.
-- `rate_limits`: For API security.
-
-*Refer to `src/lib/supabase/schema.sql` (if present) for the full structure.*
+Ensure your Supabase database has the required tables. You can use the schema provided in:
+`src/lib/supabase/schema.sql`
 
 ### 5. Run the Project
 ```bash
@@ -74,9 +72,10 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## ⚠️ Important Notes
 
-- **Large Files**: The background video `public/ancient .mp4` is omitted from the repository due to GitHub's file size limits (160MB). Please ensure you have it in your local `public/` folder for the full visual experience.
-- **Payment Mode**: By default, the payment integration is set up for Razorpay Test Mode. Switch keys to Live Mode for production.
+-   **Background Video**: The main cinematic video `public/theme2.mp4` adds depth to the experience. Ensure this file is present in your local `public/` folder.
+-   **Typography**: The font **Cormorant Unicase** is imported globally via Google Fonts in `src/app/globals.css`.
+-   **Payment Mode**: By default, the payment integration is set up for Razorpay. Use Test Keys for development and Live Keys for production.
 
 ---
 
-Built with ❤️ for Manthan 2026.
+Built with ❤️ for Manthan 2026 by BVIMIT Team.

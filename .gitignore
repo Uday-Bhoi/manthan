@@ -8,4 +8,4 @@ npm-debug.log*
 next-env.d.ts
 
 # Large assets
-public/ancient .mp4
+*.mp4

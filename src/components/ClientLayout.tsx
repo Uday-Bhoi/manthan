@@ -3,6 +3,7 @@
 import { createContext, useContext, useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import VideoIntro from './VideoIntro';
+import Chatbot from './Chatbot';
 import { usePathname } from 'next/navigation';
 
 export const IntroContext = createContext({
@@ -82,6 +83,9 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
 
     return (
         <IntroContext.Provider value={{ introComplete, setIntroComplete }}>
+            {/* Global Solid Background - Prevents white flash */}
+            <div className="fixed inset-0 bg-manthan-black -z-20" />
+
             {/* Global Intro - Handles both first load and refresh */}
             <AnimatePresence mode="wait">
                 {isLandingPage && !introComplete && (
@@ -112,7 +116,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
                     transform: 'translate(-50%, -50%) scale(1.4)'
                 }}
             >
-                <source src="/ancient .mp4" type="video/mp4" />
+                <source src="/theme2.mp4" type="video/mp4" />
             </video>
 
             <motion.div
@@ -122,6 +126,17 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
                 className={(isLandingPage && !introComplete) ? "fixed inset-0 pointer-events-none overflow-hidden bg-transparent" : "relative min-h-screen bg-transparent"}
             >
                 {children}
+
+                {/* Chatbot - Only show after intro or on subpages */}
+                {(introComplete || !isLandingPage) && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 0.5, delay: 1 }}
+                    >
+                        <Chatbot />
+                    </motion.div>
+                )}
             </motion.div>
         </IntroContext.Provider>
     );

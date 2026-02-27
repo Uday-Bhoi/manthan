@@ -479,8 +479,12 @@ function RegisterForm() {
     }
 
     return (
-        <div className="min-h-screen bg-manthan-black flex flex-col">
+        <div className="min-h-screen bg-transparent flex flex-col relative overflow-hidden">
             <Navbar />
+
+            {/* Background Glows */}
+            <div className="absolute top-0 right-1/4 w-96 h-96 bg-manthan-maroon/10 rounded-full blur-[120px] pointer-events-none" />
+            <div className="absolute bottom-1/4 left-1/4 w-96 h-96 bg-manthan-gold/5 rounded-full blur-[120px] pointer-events-none" />
 
             {/* Progress Bar Container */}
             <div className="pt-24 px-6 md:pt-32">
@@ -625,16 +629,16 @@ function RegisterForm() {
                     {step < 3 ? (
                         <button
                             onClick={goNext}
-                            className="flex items-center gap-2 px-7 py-2.5 bg-manthan-gold text-manthan-black font-semibold rounded-lg text-sm hover:bg-manthan-gold-light transition-all shadow-lg shadow-manthan-gold/20"
+                            className="flex items-center gap-2 px-8 py-3 bg-manthan-gold text-manthan-black font-bold rounded-full text-sm hover:bg-manthan-gold-light transition-all shadow-xl shadow-manthan-gold/20 active:scale-95 group"
                         >
                             Continue
-                            <ArrowRight size={16} />
+                            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                         </button>
                     ) : (
                         <button
                             onClick={handlePayment}
                             disabled={processing}
-                            className="flex items-center gap-2 px-7 py-2.5 bg-gradient-to-r from-manthan-maroon to-manthan-crimson text-white font-semibold rounded-lg text-sm hover:from-manthan-crimson hover:to-manthan-maroon transition-all shadow-lg shadow-manthan-maroon/30 disabled:opacity-50"
+                            className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-manthan-maroon to-manthan-crimson text-white font-bold rounded-full text-sm hover:from-manthan-crimson hover:to-manthan-maroon transition-all shadow-xl shadow-manthan-maroon/40 active:scale-95 disabled:opacity-50 group"
                         >
                             {processing ? (
                                 <>
@@ -643,8 +647,9 @@ function RegisterForm() {
                                 </>
                             ) : (
                                 <>
-                                    <CreditCard size={16} />
+                                    <CreditCard size={18} />
                                     Pay {formatFee(previewTotal)}
+                                    <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform ml-1" />
                                 </>
                             )}
                         </button>
@@ -696,13 +701,22 @@ function BasicInfoStep({
 
     return (
         <div>
-            <div className="mb-8">
-                <h2 className="font-heading text-2xl sm:text-3xl font-bold text-gold-gradient mb-2">
+            <div className="mb-10 text-center sm:text-left">
+                <motion.h2
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="font-heading text-3xl sm:text-4xl font-bold text-gold-gradient mb-3"
+                >
                     Tell us about yourself
-                </h2>
-                <p className="text-gray-500 text-sm">
+                </motion.h2>
+                <motion.p
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 }}
+                    className="text-gray-400 text-sm sm:text-base"
+                >
                     Fill in your details to register for Manthan 2026
-                </p>
+                </motion.p>
             </div>
 
             <div className="space-y-5">
@@ -721,7 +735,7 @@ function BasicInfoStep({
                         onBlur={() => setFocusedField(null)}
                         onKeyDown={handleKeyDown}
                         placeholder="Enter your full name"
-                        className="form-input-youform"
+                        className="w-full bg-transparent px-4 py-4 text-sm text-gray-100 placeholder:text-gray-600 focus:outline-none"
                         autoFocus
                     />
                 </FormField>
@@ -741,7 +755,7 @@ function BasicInfoStep({
                         onBlur={() => setFocusedField(null)}
                         onKeyDown={handleKeyDown}
                         placeholder="your@email.com"
-                        className="form-input-youform"
+                        className="w-full bg-transparent px-4 py-4 text-sm text-gray-100 placeholder:text-gray-600 focus:outline-none"
                     />
                 </FormField>
 
@@ -761,7 +775,7 @@ function BasicInfoStep({
                         onKeyDown={handleKeyDown}
                         placeholder="10-digit mobile number"
                         maxLength={10}
-                        className="form-input-youform"
+                        className="w-full bg-transparent px-4 py-4 text-sm text-gray-100 placeholder:text-gray-600 focus:outline-none"
                     />
                 </FormField>
 
@@ -780,7 +794,7 @@ function BasicInfoStep({
                         onBlur={() => setFocusedField(null)}
                         onKeyDown={handleKeyDown}
                         placeholder="Enter your college name"
-                        className="form-input-youform"
+                        className="w-full bg-transparent px-4 py-4 text-sm text-gray-100 placeholder:text-gray-600 focus:outline-none"
                     />
                 </FormField>
 
@@ -797,11 +811,11 @@ function BasicInfoStep({
                             onChange={(e) => setFormData({ ...formData, year: e.target.value })}
                             onFocus={() => setFocusedField('year')}
                             onBlur={() => setFocusedField(null)}
-                            className="form-input-youform appearance-none"
+                            className="w-full bg-transparent px-4 py-4 text-sm text-gray-100 placeholder:text-gray-600 focus:outline-none appearance-none"
                         >
-                            <option value="">Select Year</option>
+                            <option value="" className="bg-manthan-black">Select Year</option>
                             {yearOptions.map((y) => (
-                                <option key={y} value={y}>{y}</option>
+                                <option key={y} value={y} className="bg-manthan-black">{y}</option>
                             ))}
                         </select>
                     </FormField>
@@ -821,7 +835,7 @@ function BasicInfoStep({
                             onBlur={() => setFocusedField(null)}
                             onKeyDown={handleKeyDown}
                             placeholder="e.g., Computer Science"
-                            className="form-input-youform"
+                            className="w-full bg-transparent px-4 py-4 text-sm text-gray-100 placeholder:text-gray-600 focus:outline-none"
                         />
                     </FormField>
                 </div>
@@ -856,17 +870,18 @@ function FormField({
                 {label}
             </label>
             <div
-                className={`relative flex items-center rounded-xl border transition-all duration-200 ${error
-                    ? 'border-manthan-crimson/50 bg-manthan-crimson/5'
+                className={`relative flex items-center rounded-xl border transition-all duration-300 ${error
+                    ? 'border-manthan-crimson/50 bg-manthan-crimson/10 shadow-[0_0_15px_rgba(220,20,60,0.1)]'
                     : focused
-                        ? 'border-manthan-gold/40 bg-manthan-gold/5 shadow-sm shadow-manthan-gold/10'
-                        : 'border-white/10 bg-white/[0.02] hover:border-white/20'
+                        ? 'border-manthan-gold/60 bg-manthan-gold/10 shadow-[0_0_20px_rgba(212,168,55,0.15)]'
+                        : 'border-white/10 bg-white/[0.04] hover:border-white/20 hover:bg-white/[0.06]'
                     }`}
             >
-                <span className={`pl-4 transition-colors ${focused ? 'text-manthan-gold' : 'text-gray-600'
+                <div className={`pl-4 flex items-center justify-center transition-colors duration-300 ${focused ? 'text-manthan-gold' : 'text-gray-500'
                     }`}>
                     {icon}
-                </span>
+                    <div className="w-px h-6 bg-white/10 ml-4" />
+                </div>
                 {children}
             </div>
             {error && (
@@ -924,9 +939,9 @@ function EventSelectionStep({
                 key={event.id}
                 onClick={() => toggleEvent(event.id)}
                 whileTap={{ scale: 0.98 }}
-                className={`w-full text-left p-4 rounded-xl border transition-all duration-200 ${isSelected
-                    ? 'border-manthan-gold/50 bg-manthan-gold/10'
-                    : 'border-white/[0.08] bg-white/[0.02] hover:border-white/[0.15] hover:bg-white/[0.04]'
+                className={`w-full text-left p-5 rounded-2xl border transition-all duration-300 ${isSelected
+                    ? 'border-manthan-gold/60 bg-manthan-gold/10 shadow-[0_0_20px_rgba(212,168,55,0.1)]'
+                    : 'border-white/10 bg-white/[0.04] hover:border-white/20 hover:bg-white/[0.06]'
                     }`}
             >
                 <div className="flex items-start justify-between gap-3">

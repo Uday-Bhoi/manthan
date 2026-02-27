@@ -23,8 +23,8 @@ module.exports = {
                 },
             },
             fontFamily: {
-                heading: ['Cinzel', 'serif'],
-                body: ['Inter', 'sans-serif'],
+                heading: ['Cormorant Unicase', 'serif'],
+                body: ['Cormorant Unicase', 'serif'],
             },
             backgroundImage: {
                 'hero-pattern': "url('/bg-zodiac.jpg')",

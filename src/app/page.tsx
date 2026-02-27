@@ -31,14 +31,18 @@ export default function HomePage() {
 
                     {/* Hero content */}
                     <div className="relative z-10 text-center px-4">
-                        <motion.h1
+                        <motion.div
                             initial={{ y: 20, opacity: 0 }}
                             animate={{ y: introComplete ? 0 : 20, opacity: introComplete ? 1 : 0 }}
                             transition={{ delay: 0.5, duration: 0.8 }}
-                            className="font-heading text-5xl md:text-7xl font-bold text-gold-gradient mb-6"
+                            className="mb-6 flex justify-center"
                         >
-                            MANTHAN 2026
-                        </motion.h1>
+                            <img
+                                src="/manthan_final_logo.png"
+                                alt="Manthan 2026"
+                                className="w-full max-w-[320px] md:max-w-[500px] h-auto object-contain drop-shadow-[0_0_30px_rgba(212,168,55,0.3)]"
+                            />
+                        </motion.div>
                         <motion.p
                             initial={{ y: 20, opacity: 0 }}
                             animate={{ y: introComplete ? 0 : 20, opacity: introComplete ? 1 : 0 }}

@@ -19,7 +19,7 @@ export default function RootLayout({
             <head>
                 <link rel="icon" href="/favicon.ico" />
             </head>
-            <body className="min-h-screen bg-manthan-black text-gray-200 antialiased overflow-x-hidden">
+            <body className="min-h-screen text-gray-200 antialiased overflow-x-hidden">
                 <ClientLayout>
                     {children}
                 </ClientLayout>
